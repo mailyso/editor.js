@@ -43,8 +43,11 @@ export default class BlockEvents extends Module {
         this.arrowLeftAndUp(event);
         break;
 
+      case _.keyCodes.SLASH:
+        this.tabPressed(event, false);
+        break;
       case _.keyCodes.TAB:
-        this.tabPressed(event);
+        this.tabPressed(event, true);
         break;
     }
   }
@@ -126,8 +129,9 @@ export default class BlockEvents extends Module {
    * Open Toolbox to leaf Tools
    *
    * @param {KeyboardEvent} event - tab keydown event
+   * @parab {Boolean} bool - whether it is actually a tab
    */
-  public tabPressed(event): void {
+  public tabPressed(event, isTab): void {
     /**
      * Clear blocks selection by tab
      */
@@ -150,6 +154,7 @@ export default class BlockEvents extends Module {
     if (canOpenToolbox) {
       this.activateToolbox();
     } else if (!conversionToolbarOpened && !inlineToolbarOpened) {
+      if (!isTab) return;
       this.activateBlockSettings();
     }
   }
