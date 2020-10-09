@@ -594,8 +594,8 @@ export default class Paste extends Module {
       .filter((text) => text.trim())
       .map((text) => {
         const content = $.make('div');
-
-        content.textContent = text;
+        //  linkify all string content inside block
+        content.innerHTML = linkifyStr(text);
 
         const event = this.composePasteEvent('tag', {
           data: content,
