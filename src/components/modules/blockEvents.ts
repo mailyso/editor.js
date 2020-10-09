@@ -297,6 +297,7 @@ export default class BlockEvents extends Module {
     const { BlockManager, BlockSelection, Caret } = this.Editor;
     const currentBlock = BlockManager.currentBlock;
     const tool = this.Editor.Tools.available[currentBlock.name];
+    const curInput = currentBlock?.currentInput;
 
     /**
      * Check if Block should be removed by current Backspace keydown
@@ -326,7 +327,7 @@ export default class BlockEvents extends Module {
       BlockSelection.clearSelection(event);
 
       return;
-    } else if (currentBlock?.currentInput?.innerHTML === "/") {
+    } else if (curInput.textContent === '/') {
       this.Editor.Toolbar.close();
       this.Editor.ConversionToolbar.close();
     }
