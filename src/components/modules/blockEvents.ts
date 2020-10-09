@@ -46,9 +46,9 @@ export default class BlockEvents extends Module {
       case _.keyCodes.SLASH:
         this.tabPressed(event, false);
         break;
-      case _.keyCodes.TAB:
-        this.tabPressed(event, true);
-        break;
+      // case _.keyCodes.TAB:
+      //   this.tabPressed(event, true);
+      //   break;
     }
   }
 
@@ -326,6 +326,9 @@ export default class BlockEvents extends Module {
       BlockSelection.clearSelection(event);
 
       return;
+    } else if (currentBlock?.currentInput?.innerHTML === "/") {
+      this.Editor.Toolbar.close();
+      this.Editor.ConversionToolbar.close();
     }
 
     /**
