@@ -360,7 +360,7 @@ export default class Block {
    * @returns {boolean}
    */
   public get isEmpty(): boolean {
-    const emptyText = $.isEmpty(this.pluginsContent);
+    const emptyText = $.isEmpty(this.pluginsContent) || this.pluginsContent.textContent === '/';
     const emptyMedia = !this.hasMedia;
 
     return emptyText && emptyMedia;

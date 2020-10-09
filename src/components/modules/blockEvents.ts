@@ -43,9 +43,12 @@ export default class BlockEvents extends Module {
         this.arrowLeftAndUp(event);
         break;
 
-      case _.keyCodes.TAB:
-        this.tabPressed(event);
+      case _.keyCodes.SLASH:
+        this.tabPressed(event, false);
         break;
+      // case _.keyCodes.TAB:
+      //   this.tabPressed(event, true);
+      //   break;
     }
   }
 
@@ -126,8 +129,9 @@ export default class BlockEvents extends Module {
    * Open Toolbox to leaf Tools
    *
    * @param {KeyboardEvent} event - tab keydown event
+   * @parab {Boolean} bool - whether it is actually a tab
    */
-  public tabPressed(event): void {
+  public tabPressed(event, isTab): void {
     /**
      * Clear blocks selection by tab
      */
@@ -140,7 +144,7 @@ export default class BlockEvents extends Module {
       return;
     }
 
-    const canOpenToolbox = Tools.isInitial(currentBlock.tool) && currentBlock.isEmpty;
+    const canOpenToolbox = Tools.isInitial(currentBlock.tool) && (currentBlock.isEmpty && currentBlock.currentInput.textContent === '');
     const conversionToolbarOpened = !currentBlock.isEmpty && ConversionToolbar.opened;
     const inlineToolbarOpened = !currentBlock.isEmpty && !SelectionUtils.isCollapsed && InlineToolbar.opened;
 
@@ -150,6 +154,7 @@ export default class BlockEvents extends Module {
     if (canOpenToolbox) {
       this.activateToolbox();
     } else if (!conversionToolbarOpened && !inlineToolbarOpened) {
+      if (!isTab) return;
       this.activateBlockSettings();
     }
   }
@@ -292,6 +297,7 @@ export default class BlockEvents extends Module {
     const { BlockManager, BlockSelection, Caret } = this.Editor;
     const currentBlock = BlockManager.currentBlock;
     const tool = this.Editor.Tools.available[currentBlock.name];
+    const curInput = currentBlock?.currentInput;
 
     /**
      * Check if Block should be removed by current Backspace keydown
@@ -321,6 +327,9 @@ export default class BlockEvents extends Module {
       BlockSelection.clearSelection(event);
 
       return;
+    } else if (curInput.textContent === '/') {
+      this.Editor.Toolbar.close();
+      this.Editor.ConversionToolbar.close();
     }
 
     /**
