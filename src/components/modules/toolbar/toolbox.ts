@@ -294,7 +294,6 @@ export default class Toolbox extends Module {
   private insertNewBlock(tool: BlockToolConstructable, toolName: string): void {
     const { BlockManager, Caret, Tools } = this.Editor;
     const { currentBlock } = BlockManager;
-
     const newBlock = BlockManager.insert({
       tool: toolName,
       replace: currentBlock.isEmpty,
@@ -308,7 +307,7 @@ export default class Toolbox extends Module {
     this.Editor.Caret.setToBlock(newBlock);
 
     /** If new block doesn't contain inpus, insert new paragraph above */
-    if (newBlock.inputs.length === 0) {
+    if (newBlock.inputs.length === 0 || String(newBlock.inputs) === '/') {
       if (newBlock === BlockManager.lastBlock) {
         BlockManager.insertAtEnd();
         Caret.setToBlock(BlockManager.lastBlock);

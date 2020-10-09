@@ -144,7 +144,7 @@ export default class BlockEvents extends Module {
       return;
     }
 
-    const canOpenToolbox = Tools.isInitial(currentBlock.tool) && currentBlock.isEmpty;
+    const canOpenToolbox = Tools.isInitial(currentBlock.tool) && (currentBlock.isEmpty && currentBlock.currentInput.textContent === '');
     const conversionToolbarOpened = !currentBlock.isEmpty && ConversionToolbar.opened;
     const inlineToolbarOpened = !currentBlock.isEmpty && !SelectionUtils.isCollapsed && InlineToolbar.opened;
 
