@@ -21,6 +21,6 @@ export interface Selection {
    * Added to make selection ranges more accesssible
    * @return {Range} range - returns current selected range
    */
-  getCurrentSelection(): Range;
+  getCurrentRange(): Range;
 
 }
