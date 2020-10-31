@@ -16,7 +16,7 @@ export default class SelectionAPI extends Module {
     return {
       findParentTag: (tagName: string, className?: string): HTMLElement | null => this.findParentTag(tagName, className),
       expandToTag: (node: HTMLElement): void => this.expandToTag(node),
-      getCurrentSelection: (): Range => this.getCurrentSelection(),
+      getCurrentRange: (): Range => this.getCurrentRange(),
     };
   }
 
@@ -25,7 +25,7 @@ export default class SelectionAPI extends Module {
    *
    * @returns {Range}
    */
-  public getCurrentSelection(): Range {
+  public getCurrentRange(): Range {
     return SelectionUtils.range;
   }
 
