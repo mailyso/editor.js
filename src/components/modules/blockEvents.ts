@@ -140,6 +140,13 @@ export default class BlockEvents extends Module {
       return;
     }
 
+    const tool = Tools.available[currentBlock.name];
+
+    if (tool && tool[Tools.INTERNAL_SETTINGS.IS_DISABLED_DEFAULT_TAB_EVENT]) {
+      event.preventDefault();
+      return;
+    }
+
     const canOpenToolbox = Tools.isInitial(currentBlock.tool) && currentBlock.isEmpty;
     const conversionToolbarOpened = !currentBlock.isEmpty && ConversionToolbar.opened;
     const inlineToolbarOpened = !currentBlock.isEmpty && !SelectionUtils.isCollapsed && InlineToolbar.opened;
