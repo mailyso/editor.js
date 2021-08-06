@@ -423,6 +423,12 @@ export default class Dom {
    * @returns {boolean}
    */
   public static isEmpty(node: Node): boolean {
+    // This is a fix when I paste "calendarIcs" into an existing paragraph.
+    // As soon as I hit KEY.DOWN or KEY.RIGHT then I receive an error that lastNode is undefined
+    if (!node) {
+      return true;
+    }
+
     /**
      * Normalize node to merge several text nodes to one to reduce tree walker iterations
      */

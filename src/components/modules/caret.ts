@@ -143,7 +143,14 @@ export default class Caret extends Module {
     const selection = Selection.get();
     let focusNode = selection.focusNode;
 
+    // console.log('isAtEnd.selection', selection)
+    // console.log('isAtEnd.focusNode', focusNode)
+    // console.log('isAtEnd.currentBlock', this.Editor.BlockManager.currentBlock)
+    // console.log('isAtEnd.currentInput', this.Editor.BlockManager.currentBlock.currentInput)
+
     const lastNode = $.getDeepestNode(this.Editor.BlockManager.currentBlock.currentInput, true);
+
+    // console.log('isAtEnd.lastNode', lastNode)
 
     /** In case lastNode is native input */
     if ($.isNativeInput(lastNode)) {
@@ -197,6 +204,12 @@ export default class Caret extends Module {
       if (nothingAtRight && focusOffset === focusNode.textContent.length) {
         return true;
       }
+    }
+
+    // This is a fix when I paste "calendarIcs" into an existing paragraph.
+    // As soon as I hit KEY.DOWN or KEY.RIGHT then I receive an error that lastNode is undefined
+    if (!lastNode) {
+      return false;
     }
 
     /**
