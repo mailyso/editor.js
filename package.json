@@ -75,5 +75,8 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/editorjs"
+  },
+  "dependencies": {
+    "linkifyjs": "^2.1.9"
   }
 }

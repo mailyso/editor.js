@@ -12,6 +12,8 @@ import Block from '../block';
 import { SavedData } from '../../../types/data-formats';
 import { clean, sanitizeBlocks } from '../utils/sanitizer';
 import BlockTool from '../tools/block';
+import linkifyStr from 'linkifyjs/string';
+import linkifyHtml from 'linkifyjs/html';
 
 /**
  * Tag substitute object.
@@ -232,11 +234,12 @@ export default class Paste extends Module {
    */
   public async processText(data: string, isHTML = false): Promise<void> {
     const { Caret, BlockManager } = this.Editor;
-    const dataToInsert = isHTML ? this.processHTML(data) : this.processPlain(data);
+    const dataToInsert = isHTML ? this.processHTML(linkifyHtml(data)) : this.processPlain(data);
 
     if (!dataToInsert.length) {
       return;
     }
+
 
     if (dataToInsert.length === 1) {
       if (!dataToInsert[0].isBlock) {
@@ -259,6 +262,7 @@ export default class Paste extends Module {
       Caret.setToBlock(BlockManager.currentBlock, Caret.positions.END);
     }
   }
+
 
   /**
    * Set onPaste callback handler
@@ -720,8 +724,8 @@ export default class Paste extends Module {
       .filter((text) => text.trim())
       .map((text) => {
         const content = $.make('div');
-
-        content.textContent = text;
+        //  linkify all string content inside block
+        content.innerHTML = linkifyStr(text);
 
         const event = this.composePasteEvent('tag', {
           data: content,
@@ -848,14 +852,12 @@ export default class Paste extends Module {
     const { BlockManager, Caret } = this.Editor;
     const { currentBlock } = BlockManager;
     let block: Block;
-
     if (canReplaceCurrentBlock && currentBlock && currentBlock.isEmpty) {
       block = BlockManager.paste(data.tool, data.event, true);
       Caret.setToBlock(block, Caret.positions.END);
 
       return;
     }
-
     block = BlockManager.paste(data.tool, data.event);
 
     Caret.setToBlock(block, Caret.positions.END);
