@@ -57,7 +57,7 @@
     "cypress-plugin-tab": "^1.0.5",
     "cypress-terminal-report": "^5.3.2",
     "eslint": "^8.37.0",
-    "eslint-config-codex": "^1.7.1",
+    "eslint-config-codex": "^2.0.0",
     "eslint-plugin-chai-friendly": "^0.7.2",
     "eslint-plugin-cypress": "2.12.1",
     "html-janitor": "^2.0.4",
