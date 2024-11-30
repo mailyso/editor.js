@@ -12,6 +12,8 @@ import type Block from '../block';
 import type { SavedData } from '../../../types/data-formats';
 import { clean, sanitizeBlocks } from '../utils/sanitizer';
 import type BlockToolAdapter from '../tools/block';
+import linkifyStr from 'linkifyjs/string';
+import linkifyHtml from 'linkifyjs/html';
 
 /**
  * Tag substitute object.
@@ -232,7 +234,7 @@ export default class Paste extends Module {
    */
   public async processText(data: string, isHTML = false): Promise<void> {
     const { Caret, BlockManager } = this.Editor;
-    const dataToInsert = isHTML ? this.processHTML(data) : this.processPlain(data);
+    const dataToInsert = isHTML ? this.processHTML(linkifyHtml(data)) : this.processPlain(data);
 
     if (!dataToInsert.length) {
       return;
@@ -721,7 +723,8 @@ export default class Paste extends Module {
       .map((text) => {
         const content = $.make('div');
 
-        content.textContent = text;
+        //  linkify all string content inside block
+        content.innerHTML = linkifyStr(text);
 
         const event = this.composePasteEvent('tag', {
           data: content,
