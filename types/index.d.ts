@@ -29,6 +29,7 @@ import {
   I18n,
   Ui,
   Tools,
+  Collab,
 } from './api';
 
 import { OutputData } from './data-formats';
@@ -120,6 +121,7 @@ export interface API {
   i18n: I18n;
   readOnly: ReadOnly;
   ui: Ui;
+  collab: Collab;
 }
 
 /**

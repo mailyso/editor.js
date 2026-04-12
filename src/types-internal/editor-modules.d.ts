@@ -15,6 +15,7 @@ import StylesAPI from '../components/modules/api/styles';
 import ToolbarAPI from '../components/modules/api/toolbar';
 import TooltipAPI from '../components/modules/api/tooltip';
 import UiAPI from '../components/modules/api/ui';
+import CollabAPI from '../components/modules/api/collab';
 
 /** ./toolbar */
 import BlockSettings from '../components/modules/toolbar/blockSettings';
@@ -57,6 +58,7 @@ export interface EditorModules {
   ToolbarAPI: ToolbarAPI,
   TooltipAPI: TooltipAPI,
   UiAPI: UiAPI,
+  CollabAPI: CollabAPI,
 
   // Toolbar Modules
   BlockSettings: BlockSettings,
